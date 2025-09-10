@@ -1,4 +1,4 @@
-   <!-- public/index.html -->
+<!-- public/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +41,7 @@
 <h2>Choisissez votre type de Carte</h2>
 <div class="choice">
     
-    <div class="number choiceflex" for="checkcard" id="number" >
+    <!--<div class="number choiceflex" for="checkcard" id="number" >
         <div>
                <input type="radio" name="checkcard" id="number" onchange="choicecard(1)">
         </div>
@@ -54,19 +54,10 @@
    </div>
 
 </div>
-<form id="payment-form" >
-      <div id="payment-element">
-        <!--Stripe.js injects the Payment Element-->
-      </div>
-      <button id="submit" type="button">
-        <div class="spinner hidden" id="spinner"></div>
-        <span id="button-text">Pay now</span>
-      </button>
-      <div id="payment-message" class="hidden"></div>
-    </form>
+-->
  <!--IBAN injects the Payment Element-->   
- <div id="ibanshow" style="display:none">
-  <form id="customer-form">
+        
+<form id="customer-form">
       
     <h3>Informations Clients</h3>
     <input type="text" id="name" placeholder="Nom complet" required class="input-40-height">
@@ -85,8 +76,6 @@
     <button onclick="createPayment()" type="submit">Débiter le compte</button>
   </div>
     </form>
-  </div>
-
   
 </div>
 </div>
