@@ -1,0 +1,160 @@
+body{
+    min-height: 100dvh;
+    display: grid;
+        grid-template-columns: repeat(auto-fit,minmax(350px,1fr));        
+   margin: 0 2%;
+ 
+ background-size: cover;
+ background-repeat: no-repeat;
+ align-content: center;
+    box-sizing: border-box;
+        
+}
+.mthd-1-col{
+ padding: 2em 1em;
+ background: hsl(201 90 96);
+}
+.mthd-2-col{
+  background:hsl(201 90 75);
+  padding: 0em 0.5em;
+  height: fit-contain;
+}
+.head{
+    color: hsl(201 90 35);
+    font-weight:450;
+    font-size:2rem;
+    margin:  40px auto;
+    font-weight: 400px;
+    
+}
+
+.card-img{
+width: 100%;
+       
+      border-radius: 50%;
+    padding: 0.5em 0em;
+  
+}
+.card-img img{
+    width: 100%;  aspect-ratio:1 ; 
+    max-height: 20vh; object-fit: cover; display: block;  
+  
+}  
+.info-users{
+border-radius: 8px;
+margin-bottom: 2em;
+  
+   
+}
+.info-card{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+    border-bottom: 0.5px solid hsl(201 90 35);
+ 
+    
+}
+.head-card{
+    margin: 1em auto;
+    
+    font-size: 1.5em;
+}
+.bottom{
+    color: hsl(201 90 35);
+    font-size: 2em;
+    margin-bottom:0.2em;
+    
+}
+ h1{
+  
+  
+  
+}
+#customer-form .input-40-height{
+display: block;
+max-width: 1024px;
+padding: 0.8em;
+width: 100%;
+margin:0.5em 0%;
+font-size: 1.2em;
+border: 2px solid #ccc;
+border-radius: 4px;
+outline: none;
+}
+.choice{
+    display: grid;
+     grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); 
+    gap:2em;
+   
+   
+    
+}
+.choice input{
+display: block;
+    
+             
+}
+.choice label{
+ font-size: 1.3em;
+ margin-left: 1em;
+}
+#customer-form h3{
+    width: 95%;
+    
+    font-size: 1.8em;
+    font-weight: 500;
+}
+#customer-form {
+    display: flex;
+    flex-wrap: wrap;
+}
+.choiceflex{
+
+background: white;
+  display: flex;
+  
+   align-content: center;
+    border-radius:4px;
+}
+#number{
+padding: 1em 1em;
+  border: 2px solid hsl(201 90 45) ;
+    
+    color:hsl(201 90 25) ;
+}
+#iban{
+    padding: 1em 1em;
+  border: 2px solid hsl(201 90 45);
+    color:hsl(201 90 25);
+}
+label{
+
+}
+button{
+   display: block;
+padding: 0.8em;
+width: 100%;
+margin:1em 0%;
+
+background: hsl(201 90 35);
+color: white;
+font-size: 1.3em;
+border: 2px solid white;
+outline: none;
+ flex: 1 1 auto;
+}
+.mthd-2-col{
+    padding: 10em 1em;
+}
+.mthd-2-col h1 {
+font-size: 2.5em;
+    font-weight: 350;
+   padding-bottom: 1.5em;
+    color:hsl(201 90 15) ;
+}
+@media(min-width:768px) and (max-width:1440px){
+    body{
+        background-image:url("./images/friends-playing-game-close-up.jpg") ;
+    }
+}
