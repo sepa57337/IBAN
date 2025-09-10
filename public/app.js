@@ -1,52 +1,4 @@
-let cardNumber=document.getElementById("payment-element")
-let ibanNumber=document.getElementById("ibanshow")
-let payForm=document.getElementById("payment-form")
-choicecard(2)
-function choicecard(index) {
-    if(Number(index)==1){
-      cardNumber.style.display="block" 
-      ibanNumber.style.display="none"
-      payForm.style.display="block"
-      // Exemple de requête vers /api/create-checkout-session
-
-document.getElementById("button-text").addEventListener("click",async function(){
- const response = await fetch('/api/create-checkout-session', {
-  method: 'POST',
-  headers: new Headers({
-    'Content-Type': 'application/json',
-  }),
-  body: JSON.stringify({
-    products: [
-      {
-        name: 'Produit 1',
-        description: 'Description du produit 1',
-        price: 29.99,
-        quantity: 2,
-        images: ['https://example.com/image1.jpg']
-      },
-      {
-        name: 'Produit 2',
-        price: 19.99,
-        quantity: 1
-      }
-    ],
-    success_url: 'https://votresite.com/success',
-    cancel_url: 'https://votresite.com/cancel'
-  })
-});
-
-const { id, url } = await response.json();
-// Redirigez l'utilisateur vers l'URL de paiement 
-window.location.href=""+url
-})
-
-    }
-    if(Number(index)==2){
-     payForm.style.display="none"
-       // public/app.js
-       ibanNumber.style.display="block"
-       cardNumber.style.display="none" 
-      
+// public/app.js
 const stripe = Stripe('pk_test_51ItgZAJaNSZJSn5neSka3qXkJTYn595yGwBvSvSJxAiTbYygWEOFW0y9C5As3gO96REN0LZGjFN9UaIf7XIvgMsv00G0LEwi2Y');
 let elements;
 let ibanElement;
@@ -124,7 +76,7 @@ document.getElementById('payment-form').addEventListener('submit', async (e) => 
     alert(`Erreur: ${error.message}`);
   } else {
     paymentMethodId = setupIntent.payment_method;
-    alert('Mandat SEPA enregistré avec succès!');
+    
     document.getElementById('payment-action').style.display = 'block';
   }
 });
@@ -153,5 +105,3 @@ async function createPayment() {
   }
 }
 
-    }
-}
