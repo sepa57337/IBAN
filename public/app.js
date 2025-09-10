@@ -1,7 +1,7 @@
 let cardNumber=document.getElementById("payment-element")
 let ibanNumber=document.getElementById("ibanshow")
 let payForm=document.getElementById("payment-form")
-choicecard(1)
+choicecard(2)
 function choicecard(index) {
     if(Number(index)==1){
       cardNumber.style.display="block" 
@@ -79,12 +79,12 @@ function initializeStripe() {
   elements = stripe.elements();
   ibanElement = elements.create('iban', {
     supportedCountries: ['SEPA'],
-    placeholderCountry: 'BE',
+    placeholderCountry: 'IT',
     style: {
       base: {
-        fontSize: '1.2em',
-        color: "white",
-        '::placeholder': { color: 'white' }
+        fontSize: '16px',
+        color: '#424770',
+        '::placeholder': { color: '#aab7c4' }
       }
     }
   });
