@@ -1,11 +1,11 @@
 // server.js
 const express = require('express');
 const bodyParser = require('body-parser');
-
+require("dotenv").config()
 const app = express();
 // config/stripe.js
 const Stripe = require('stripe');
-const stripe = Stripe("sk_test_51ItgZAJaNSZJSn5nTnJ2XzcPZ8voUbMavVMw4bMrySSfxeBqYduQbCb1gidQ7msD2928HXfAMUkvncgw23gCk02800kVUs3zef");
+const stripe = Stripe(process.env.STRIPE_SK_KEY);
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
@@ -201,46 +201,7 @@ app.get('/api/session-status', async (req, res) => {
   }
 });
 // Webhook pour les événements Stripe
-app.post('/webhook', bodyParser.raw({type: 'application/json'}), 
-  async (req, res) => {
-    const sig = req.headers['stripe-signature'];
-    let event;
 
-    try {
-      event = stripe.webhooks.constructEvent(
-        req.body, 
-        sig, 
-        process.env.STRIPE_WEBHOOK_SECRET
-      );
-    } catch (err) {
-      return res.status(400).send(`Webhook Error: ${err.message}`);
-    }
-
-    // Gérer les événements
-    switch (event.type) {
-      case 'payment_intent.succeeded':
-        const paymentIntent = event.data.object;
-        console.log('Paiement réussi:', paymentIntent.id);
-        // Mettre à jour votre base de données
-        break;
-
-      case 'payment_intent.payment_failed':
-        const failedPayment = event.data.object;
-        console.log('Paiement échoué:', failedPayment.id);
-        break;
-
-      case 'mandate.updated':
-        const mandate = event.data.object;
-        console.log('Mandat mis à jour:', mandate.id);
-        break;
-
-      default:
-        console.log(`Événement non géré: ${event.type}`);
-    }
-
-    res.json({received: true});
-  }
-);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
