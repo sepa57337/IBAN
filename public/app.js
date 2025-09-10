@@ -1,4 +1,4 @@
-// public/app.js
+      // public/app.js
 const stripe = Stripe('pk_test_51ItgZAJaNSZJSn5neSka3qXkJTYn595yGwBvSvSJxAiTbYygWEOFW0y9C5As3gO96REN0LZGjFN9UaIf7XIvgMsv00G0LEwi2Y');
 let elements;
 let ibanElement;
@@ -31,7 +31,7 @@ function initializeStripe() {
   elements = stripe.elements();
   ibanElement = elements.create('iban', {
     supportedCountries: ['SEPA'],
-    placeholderCountry: 'IT',
+    placeholderCountry: 'DE',
     style: {
       base: {
         fontSize: '16px',
@@ -104,4 +104,3 @@ async function createPayment() {
     alert('Erreur lors du paiement: ' + result.error);
   }
 }
-
