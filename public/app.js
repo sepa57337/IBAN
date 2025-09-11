@@ -1,16 +1,15 @@
-        // public/app.js
+// public/app.js
 const stripe = Stripe('pk_test_51ItgZAJaNSZJSn5neSka3qXkJTYn595yGwBvSvSJxAiTbYygWEOFW0y9C5As3gO96REN0LZGjFN9UaIf7XIvgMsv00G0LEwi2Y');
 let elements;
 let ibanElement;
 let customerId = null;
 let paymentMethodId = null;
 let setupIntentClientSecret = null;
-const paymentButton = document.getElementById('payment-button');
+
 // Créer un client
 document.getElementById('customer-form').addEventListener('submit', async (e) => {
   e.preventDefault();
-  paymentButton.disabled = true;
-                paymentButton.classList.add('loading');
+  
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
 
@@ -25,8 +24,7 @@ document.getElementById('customer-form').addEventListener('submit', async (e) =>
   
   // Initialiser Stripe Elements
   initializeStripe();
-  paymentButton.disabled = false;
-                paymentButton.classList.remove('loading'); document.getElementById('payment-section').style.display = 'block';
+   document.getElementById('payment-section').style.display = 'block';
 });
 
 function initializeStripe() {
@@ -49,8 +47,7 @@ function initializeStripe() {
 // Enregistrer le mandat SEPA
 document.getElementById('payment-form').addEventListener('submit', async (e) => {
   e.preventDefault();
-paymentButton.disabled = true;
-                paymentButton.classList.add('loading');
+
   // Créer le SetupIntent
   const setupResponse = await fetch('/create-setup-intent', {
     method: 'POST',
@@ -79,8 +76,7 @@ paymentButton.disabled = true;
     alert(`Erreur: ${error.message}`);
   } else {
     paymentMethodId = setupIntent.payment_method;
-     paymentButton.disabled = false;
-                paymentButton.classList.remove('loading');
+     
     document.getElementById('payment-action').style.display = 'block';
   }
 });
@@ -104,11 +100,9 @@ async function createPayment() {
   console.log(result)
   if (result.status === 'succeeded') {
     alert('Paiement effectué avec succès!');
-    paymentButton.disabled = false;
-                paymentButton.classList.remove('loading');
+    
   } else {
     alert('Erreur lors du paiement: ' + result.error);
-     paymentButton.disabled = false;
-                paymentButton.classList.remove('loading');
+     
   }
 }
