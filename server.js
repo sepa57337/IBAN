@@ -102,14 +102,7 @@ app.post('/create-sepa-payment', async (req, res) => {
       break;
     case 'succeeded':
       // Paiement déjà réussi
-      const confirmedIntent=await stripe.paymentIntents.confirm(paymentIntent.id);
-
-    console.log(confirmedIntent)
-    res.json({ 
-      paymentIntentId: confirmedIntent.id,
-      status: confirmedIntent.status,
-      mandate: confirmedIntent.mandate
-    });
+      
       console.log('Paiement déjà complété');
       break;
     default:
