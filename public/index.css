@@ -71,69 +71,7 @@ justify-content: center;
   
   
 }
-.spinner{
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            position: absolute;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        .payment-button.loading .button-text {
-            opacity: 0;
-        }
-        
-        .payment-button.loading .spinner {
-            opacity: 1;
-        }
-        .payment-button {
-            position: relative;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 16px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        
-        .payment-button:hover {
-            background: #5a67d8;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
-        }
-        
-        .payment-button:active {
-            transform: translateY(0);
-        }
-        
-        .payment-button:disabled {
-            background: #c3cfe2;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .button-text {
-            transition: opacity 0.3s ease;
-        }
+
         
 #customer-form .input-40-height,input-40-height{
 display: block;
