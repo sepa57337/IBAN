@@ -9,7 +9,7 @@ let setupIntentClientSecret = null;
 // Créer un client
 document.getElementById('customer-form').addEventListener('submit', async (e) => {
   
-                ;
+                
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
 
@@ -34,9 +34,9 @@ function initializeStripe() {
     placeholderCountry: 'DE',
     style: {
       base: {
-        fontSize: '16px',
-        color: '#424770',
-        '::placeholder': { color: '#aab7c4' }
+        fontSize: '1.2em',
+        color: 'white',
+        '::placeholder': { color: 'white' }
       }
     }
   });
