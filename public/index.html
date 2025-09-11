@@ -54,7 +54,7 @@
    </div>
 
 </div>
--->
+>--
  <!--IBAN injects the Payment Element-->   
         
 <form id="customer-form">
@@ -62,23 +62,28 @@
     <h3>Informations Clients</h3>
     <input type="text" id="name" placeholder="Nom complet" required class="input-40-height">
     <input type="email" id="email" placeholder="Email" required class="input-40-height">
-    <button type="submit" >Créer le client</button>
+    <button type="submit" id="payment-button"
+    class="payment-button">Créer le client
+    <span class="spinner"></span>
+    </button>
   </form>
 
   <div id="payment-section" style="display:none">
     <h2>Informations bancaires</h2>
     <form id="payment-form">
       <div id="iban-element"></div>
-      <button type="submit">Enregistrer le mandat</button>
+      <button type="submit"id="payment-button"
+    class="payment-button">Enregistrer le mandat</button>
       <div id="payment-action" style="display:none" >
     <h2>Effectuer un prélèvement</h2>
     <input class="input-40-height" type="number" id="amount" placeholder="Montant()" value="20" >
-    <button onclick="createPayment()" type="submit">Débiter le compte</button>
+    <button onclick="createPayment()" type="submit" id="payment-button"
+    class="payment-button">Débiter le compte</button>
   </div>
     </form>
   
 </div>
 </div>
-  <script src="app.js"></script>
+  <script src="ap.js"></script>
 </body>
 </html>
