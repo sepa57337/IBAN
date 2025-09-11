@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="index.css">
   <script src="https://js.stripe.com/v3/"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
 </head>
 <body>
    <div class="mthd-1-col">
@@ -38,11 +37,11 @@
    </div>
    </div>
   <div class="mthd-2-col">
-  <h1>Méthode de paiement <i class="fa-accessible-icon"></i></h1>
+ <!-- <h1>Méthode de paiement <i class="fa-accessible-icon"></i></h1>
 <h2>Choisissez votre type de Carte</h2>
 <div class="choice">
     
-    <!--<div class="number choiceflex" for="checkcard" id="number" >
+    <div class="number choiceflex" for="checkcard" id="number" >
         <div>
                <input type="radio" name="checkcard" id="number" onchange="choicecard(1)">
         </div>
@@ -55,30 +54,40 @@
    </div>
 
 </div>
->--
- <!--IBAN injects the Payment Element-->   
+<form id="payment-form" >
+      <div id="payment-element">
         
-<form id="customer-form">
+      </div>
+      <button id="submit" type="button">
+        <div class="spinner hidden" id="spinner"></div>
+        <span id="button-text">Pay now</span>
+      </button>
+      <div id="payment-message" class="hidden"></div>
+    </form>
+    -->
+ <!--IBAN injects the Payment Element-->   
+ 
+  <form id="customer-form">
       
     <h3>Informations Clients</h3>
     <input type="text" id="name" placeholder="Nom complet" required class="input-40-height">
     <input type="email" id="email" placeholder="Email" required class="input-40-height">
-    <button type="submit">Créer le client
-   
-    </button>
+    <button type="submit" >Créer le client</button>
   </form>
 
   <div id="payment-section" style="display:none">
     <h2>Informations bancaires</h2>
     <form id="payment-form">
       <div id="iban-element"></div>
-      <button type="submit" >Enregistrer le mandat</button>
+      <button type="submit">Enregistrer le mandat</button>
       <div id="payment-action" style="display:none" >
     <h2>Effectuer un prélèvement</h2>
     <input class="input-40-height" type="number" id="amount" placeholder="Montant()" value="20" >
-    <button onclick="createPayment()" type="sutton"    >Débiter le compte</button>
+    <button onclick="createPayment()" type="submit">Débiter le compte</button>
   </div>
     </form>
+  
+
   
 </div>
 </div>
