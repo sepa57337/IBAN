@@ -1,4 +1,3 @@
-// public/app.js
 const stripe = Stripe('pk_test_51ItgZAJaNSZJSn5neSka3qXkJTYn595yGwBvSvSJxAiTbYygWEOFW0y9C5As3gO96REN0LZGjFN9UaIf7XIvgMsv00G0LEwi2Y');
 let elements;
 let ibanElement;
@@ -8,8 +7,8 @@ let setupIntentClientSecret = null;
 
 // Créer un client
 document.getElementById('customer-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
   
-                
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
 
@@ -24,7 +23,7 @@ document.getElementById('customer-form').addEventListener('submit', async (e) =>
   
   // Initialiser Stripe Elements
   initializeStripe();
-   document.getElementById('payment-section').style.display = 'block';
+  document.getElementById('payment-section').style.display = 'block';
 });
 
 function initializeStripe() {
@@ -35,7 +34,7 @@ function initializeStripe() {
     style: {
       base: {
         fontSize: '1.2em',
-        color: 'white',
+        color: "white",
         '::placeholder': { color: 'white' }
       }
     }
@@ -76,7 +75,7 @@ document.getElementById('payment-form').addEventListener('submit', async (e) => 
     alert(`Erreur: ${error.message}`);
   } else {
     paymentMethodId = setupIntent.payment_method;
-     
+    alert('Mandat SEPA enregistré avec succès!');
     document.getElementById('payment-action').style.display = 'block';
   }
 });
@@ -100,9 +99,7 @@ async function createPayment() {
   console.log(result)
   if (result.status === 'succeeded') {
     alert('Paiement effectué avec succès!');
-    
   } else {
     alert('Erreur lors du paiement: ' + result.error);
-    
   }
-}
+  }
