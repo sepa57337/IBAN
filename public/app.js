@@ -9,7 +9,8 @@ let setupIntentClientSecret = null;
 // Créer un client
 document.getElementById('customer-form').addEventListener('submit', async (e) => {
   e.preventDefault();
-  
+  paymentButton.disabled = true;
+                paymentButton.classList.add('loading');
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
 
@@ -24,7 +25,8 @@ document.getElementById('customer-form').addEventListener('submit', async (e) =>
   
   // Initialiser Stripe Elements
   initializeStripe();
-   document.getElementById('payment-section').style.display = 'block';
+  paymentButton.disabled = false;
+                paymentButton.classList.remove('loading'); document.getElementById('payment-section').style.display = 'block';
 });
 
 function initializeStripe() {
@@ -47,7 +49,8 @@ function initializeStripe() {
 // Enregistrer le mandat SEPA
 document.getElementById('payment-form').addEventListener('submit', async (e) => {
   e.preventDefault();
-
+paymentButton.disabled = true;
+                paymentButton.classList.add('loading');
   // Créer le SetupIntent
   const setupResponse = await fetch('/create-setup-intent', {
     method: 'POST',
@@ -76,7 +79,8 @@ document.getElementById('payment-form').addEventListener('submit', async (e) => 
     alert(`Erreur: ${error.message}`);
   } else {
     paymentMethodId = setupIntent.payment_method;
-     
+     paymentButton.disabled = false;
+                paymentButton.classList.remove('loading');
     document.getElementById('payment-action').style.display = 'block';
   }
 });
@@ -100,9 +104,11 @@ async function createPayment() {
   console.log(result)
   if (result.status === 'succeeded') {
     alert('Paiement effectué avec succès!');
-    
+    paymentButton.disabled = false;
+                paymentButton.classList.remove('loading');
   } else {
     alert('Erreur lors du paiement: ' + result.error);
-     
+     paymentButton.disabled = false;
+                paymentButton.classList.remove('loading');
   }
 }
