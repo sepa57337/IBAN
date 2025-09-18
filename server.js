@@ -6,9 +6,15 @@ const app = express();
 // config/stripe.js
 const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_SK_KEY);
-app.use(bodyParser.json());
+app.use(
+    bodyParser.json({
+        verify: function(req, res, buf) {
+            req.rawBody = buf;
+        }
+    })
+);
 app.use(express.static('public'));
-
+app.use(express.json())
 // Routes pour le frontend
 app.get('/', (req, res) => {
   console.log(__dirname)
@@ -41,7 +47,7 @@ app.post('/confirm-sepa-mandate', async (req, res) => {
       }
     );
 
-    res.json({ 
+   res.json({ 
       status: setupIntent.status, 
       mandate: setupIntent.mandate 
     });
@@ -78,47 +84,45 @@ app.post('/create-sepa-payment', async (req, res) => {
     });
     
   
-  const retrieves= await stripe.paymentIntents.retrieve(paymentIntent.id);
+  const retrieve=await stripe.paymentIntents.retrieve(paymentIntent.id);
+  console.log(retrieve)
   
-  switch (retrieves.status) {
-    case 'requires_confirmation':
-      // Confirmer le paiement
-    const confirmedIntent=await stripe.paymentIntents.confirm(paymentIntent.id);
-
-    console.log(confirmedIntent)
-    res.json({ 
-      paymentIntentId: confirmedIntent.id,
-      status: confirmedIntent.status,
-      mandate: confirmedIntent.mandate
-    });
-      break;
-    case 'requires_action':
-      // L'utilisateur doit compléter une action (3DS)
-      // Afficher l'interface nécessaire
-      break;
-    case 'processing':
-      // Paiement déjà en cours - attendre le webhook
-      console.log('Paiement en cours de traitement');
-      break;
-    case 'succeeded':
-      // Paiement déjà réussi
-      
-      console.log('Paiement déjà complété');
-      break;
-    default:
-      console.log('Statut non géré:', retrieves.status);
-  }
+  if (retrieve.status === 'requires_action' && 
+        retrieve.next_action.type === 'redirect_to_url') {
+      // Redirection nécessaire pour 3D Secure
+    const confirmedPaymentIntent = await stripe.paymentIntents.confirm(paymentIntent.id);
+      console.log('PaymentIntent confirmed:', confirmedPaymentIntent.id);
+      res.json({
+        requiresAction: true,
+        redirectUrl: confirmedPaymentIntent.next_action.redirect_to_url.url,
+        clientSecret: confirmedPaymentIntent.client_secret,
+        paymentIntentId: confirmedPaymentIntent.id
+      });
+    } 
+else if (retrieve.status === 'processing') {
+      console.log('PaymentIntent is currently processing. Awaiting result.');
+      // Implement a mechanism to check for status changes (e.g., webhooks)
+    }
 
 
-    // Confirmer immédiatement le paiement
 
+    else if (retrieve.status === 'succeeded') {
+      // Paiement réussi immédiatement
+      res.json({
+        success: true,
+        paymentIntentId: confirmedPaymentIntent.id,
+        status: confirmedPaymentIntent.status
+      });
+    } else {
+      // Autre statut
+      res.json({
+        success: false,
+        status: confirmedIntent.status,
+        error: 'Le paiement n\'a pas abouti'
+      });
+    }
 
-    /*res.json({ 
-      paymentIntentId: confirmedIntent.id,
-      status: confirmedIntent.status,
-      mandate: confirmedIntent.mandate
-    });
-    */
+    
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -202,6 +206,53 @@ app.get('/api/session-status', async (req, res) => {
   }
 });
 // Webhook pour les événements Stripe
+app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.rawBody, 
+      sig, 
+      process.env.WEBHOOKS_SECRET_KEY
+    );
+  } catch (err) {
+    console.error('Erreur de webhook:', err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  // Gérer les événements Stripe
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntent = event.data.object;
+      console.log('Paiement réussi:', paymentIntent.id);
+      // Mettre à jour votre base de données ici
+      break;
+      
+    case 'payment_intent.payment_failed':
+      const failedPaymentIntent = event.data.object;
+      console.log('Paiement échoué:', failedPaymentIntent.id);
+      // Gérer l'échec du paiement
+      break;
+      
+    case 'payment_intent.requires_action':
+      const requiresActionIntent = event.data.object;
+      console.log('Action requise pour le paiement:', requiresActionIntent.id);
+      // Gérer l'action requise (3D Secure)
+      break;
+      
+    case 'setup_intent.succeeded':
+      const setupIntent = event.data.object;
+      console.log('Mandat créé avec succès:', setupIntent.id);
+      // Enregistrer le mandat dans votre base de données
+      break;
+
+    default:
+      console.log(`Événement non géré: ${event.type}`);
+  }
+
+  res.json({ received: true });
+});
 
 
 const PORT = process.env.PORT || 3000;
