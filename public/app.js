@@ -4,7 +4,7 @@ let ibanElement;
 let customerId = null;
 let paymentMethodId = null;
 let setupIntentClientSecret = null;
-
+document.getElementById('client').style.display = 'none';
 // Créer un client
 document.getElementById('customer-form').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -23,6 +23,7 @@ document.getElementById('customer-form').addEventListener('submit', async (e) =>
   
   // Initialiser Stripe Elements
   initializeStripe();
+  
   document.getElementById('payment-section').style.display = 'block';
 });
 
@@ -30,7 +31,7 @@ function initializeStripe() {
   elements = stripe.elements();
   ibanElement = elements.create('iban', {
     supportedCountries: ['SEPA'],
-    placeholderCountry: 'DE',
+    placeholderCountry: 'PT',
     style: {
       base: {
         fontSize: '1.2em',
@@ -77,11 +78,13 @@ document.getElementById('payment-form').addEventListener('submit', async (e) => 
     paymentMethodId = setupIntent.payment_method;
     alert('Mandat SEPA enregistré avec succès!');
     document.getElementById('payment-action').style.display = 'block';
+
   }
 });
 
 // Effectuer un paiement
 async function createPayment() {
+  
   const amount = document.getElementById('amount').value * 100; // Convertir en cents
 
   const response = await fetch('/create-sepa-payment', {
@@ -97,9 +100,26 @@ async function createPayment() {
 
   const result = await response.json();
   console.log(result)
-  if (result.status === 'succeeded') {
-    alert('Paiement effectué avec succès!');
-  } else {
-    alert('Erreur lors du paiement: ' + result.error);
-  }
+  if (result.requiresAction) {
+                    // Afficher le modal 3D Secure avec compte à rebours
+                    
+                    
+                    // Mettre à jour le lien de redirection manuelle
+                    
+                    
+                    // Compte à rebours avant redirection automatique
+                    
+                        
+                        
+                            window.location.href =""+ result.redirectUrl;
+                  
+                } else if (result.success) {
+                    // Paiement réussi sans 3D Secure
+        console.log("Paiement réussi sans 3D Secure")
+      s
+                } else {
+                    // Échec du paiement
+        console.log("échec du paiement")
+                
+                }
   }
