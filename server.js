@@ -214,7 +214,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
     event = stripe.webhooks.constructEvent(
       req.rawBody, 
       sig, 
-      process.env.WEBHOOKS_SECRET_KEY
+      "whsec_8zBVcMUirEv03bCFmIXlbcAiYapKNmD0"
     );
   } catch (err) {
     console.error('Erreur de webhook:', err.message);
