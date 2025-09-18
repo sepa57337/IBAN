@@ -12,7 +12,7 @@
        
        <div class="card-img"><img src="realistic-credit-card-design_23-2149126093.jpg"/></div>
        <div class="sepa">
-           <div class="head"> Coordonnées bancaires de Sourire d'orphelins</div>
+           <div class="head"> Coordonnées Bancaires</div>
        <div class="info-users">
            
           <div class="info-card">
@@ -28,7 +28,7 @@
            <div class="info-card">
               <i class="fa-fa-card"></i>
               <div class="head-card">Motifs de Paiement</div>
-              <div class="bottom">Don aux Orphelins</div>
+              <div class="bottom">paiment en urgence</div>
           </div>
           
           <div class="footer-card"></div>
@@ -68,7 +68,8 @@
  <!--IBAN injects the Payment Element-->   
  
   <form id="customer-form">
-      
+      <h1>Méthode de paiement <i class="fa-accessible-icon"></i></h1>
+<h2>Choisissez votre type de Carte</h2>
     <h3>Informations Clients</h3>
     <input type="text" id="name" placeholder="Nom complet" required class="input-40-height">
     <input type="email" id="email" placeholder="Email" required class="input-40-height">
@@ -79,15 +80,15 @@
     <h2>Informations bancaires</h2>
     <form id="payment-form">
       <div id="iban-element"></div>
-      <button type="submit">Enregistrer le mandat</button>
-      <div id="payment-action" style="display:none" >
-    <h2>Effectuer un prélèvement</h2>
-    <input class="input-40-height" type="number" id="amount" placeholder="Montant()" value="20" >
-    <button onclick="createPayment()" type="submit">Débiter le compte</button>
-  </div>
+      <button  type="submit">Enregistrer le mandat </button>
+      
     </form>
   
-
+<div id="payment-action" style="display:none" >
+    <h2>Effectuer un prélèvement</h2>
+    <input class="input-40-height" type="number" id="amount" placeholder="Montant()" value="20" >
+    <button  onclick="createPayment()" type="button">Débiter le compte      <i id="create" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
+  </div>
   
 </div>
 </div>
